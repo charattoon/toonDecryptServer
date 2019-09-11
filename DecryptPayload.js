@@ -1,6 +1,8 @@
 var CryptoJS = require("crypto-js");
 
-var toonKey =  Buffer.from('0d5b411174f7f3543fbd006abc1f716e', 'hex');
+var toonKey =  Buffer.from('0D5B411174F7F3543FBD006ABC1F716E', 'hex');
+// var toonKey = Buffer.from('53CAB0AF4141FDC3AB973F1107678B27EFAC7F4549FCCB72', 'hex');
+// var toonKey = Buffer.from('326A1EBC882487370500E84D0DDA81F46F69F67552648F9EF20252FDCD895808', 'hex');
 
 var LORA_IV = CryptoJS.enc.Hex.parse('00000000000000000000000000000000');
 

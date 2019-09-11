@@ -2,10 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-// const DecryptPayload = require('./DecryptPayload');
+const DecryptPayload = require('./DecryptPayload');
 
 const app = express();
-const PORT = process.env.PORT || 8001
+const PORT = process.env.PORT || 80
 
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost:27017/lorawan", { useNewUrlParser: true }).then(
@@ -56,12 +56,13 @@ app.post("/", (req, res) => {
     var uplinkData = new Uplink(req.body);
     uplinkData.save()
         .then(item => {
-            res.send("uplink saved to database");
-
             // call toonDecryption
-            // var payload_raw = req.body.payload_raw;
-            // console.log("payload_raw: "+payload_raw);
-            // app.use(DecryptPayload.toonDecrypt(payload_raw));
+            var payload_raw = req.body.payload_raw;
+            console.log("payload_raw: "+payload_raw);
+            var plaintextPayload = app.use(DecryptPayload.toonDecrypt(payload_raw));
+            console.log("plaintextPayload: "+plaintextPayload);
+
+            res.send("uplink saved to database");
         })
         .catch(err => {
             res.status(400).send("unable to save to database");
