@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const DecryptPayload = require('./DecryptPayload');
+const DecryptPayload = require('./DecryptPayloadHex');
 
 const app = express();
 const PORT = process.env.PORT || 80
@@ -18,7 +18,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var uplinkSchema = new mongoose.Schema({
     DevEUI_uplink: {
-        Time: String,
+        type: Object,
+        Time: Date,
         DevEUI: String,
         DevAddr: String,
         FPort: Number,
@@ -28,7 +29,7 @@ var uplinkSchema = new mongoose.Schema({
         FCntDn: Number,
         payload_hex: String,
         mic_hex: String,
-        Lrcid: String,
+        Lrcid: Number,
         LrrRSSI: Number,
         LrrSNR: Number,
         SpFact: Number,
@@ -40,8 +41,11 @@ var uplinkSchema = new mongoose.Schema({
         LrrLAT: Number,
         LrrLON: Number,
         Lrrs: {
+            type: Object,
             Lrr: {
+                type: Object,
                 0: {
+                    type: Object,
                     Lrrid: String,
                     Chain: Number,
                     LrrRSSI: Number,
@@ -49,6 +53,7 @@ var uplinkSchema = new mongoose.Schema({
                     LrrESP: Number
                 },
                 1: {
+                    type: Object,
                     Lrrid: String,
                     Chain: Number,
                     LrrRSSI: Number,
@@ -56,6 +61,7 @@ var uplinkSchema = new mongoose.Schema({
                     LrrESP: Number
                 },
                 2: {
+                    type: Object,
                     Lrrid: String,
                     Chain: Number,
                     LrrRSSI: Number,
@@ -66,12 +72,14 @@ var uplinkSchema = new mongoose.Schema({
         },
         CustomerID: Number,
         CustomerData: {
+            type: Object,
             alr: {
+                type: Object,
                 pro: String,
                 ver: Number
             }
         },
-        ModelCfg: String,
+        ModelCfg: Number,
         InstantPER: Number,
         MeanPER: Number
     }
@@ -84,8 +92,14 @@ app.post("/", (req, res) => {
     uplinkData.save()
         .then(item => {
             // call toonDecryption
-            var payload_raw = req.body.payload_raw;
-            console.log("payload_raw: "+payload_raw);
+            if(req.body.payload_raw=undefined){
+                var payload_raw = req.body.payload_raw;
+                console.log("payload_raw: "+payload_raw);
+            } else {
+                var payload_raw = req.body.DevEUI_uplink.payload_hex;
+                console.log("payload_hex: "+payload_raw);
+            }
+
             var plaintextPayload = app.use(DecryptPayload.toonDecrypt(payload_raw));
             console.log("plaintextPayload: "+plaintextPayload);
 
