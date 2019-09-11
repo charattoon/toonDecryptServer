@@ -1,8 +1,8 @@
 var CryptoJS = require("crypto-js");
 
-var toonKey =  Buffer.from('0D5B411174F7F3543FBD006ABC1F716E', 'hex');
-// var toonKey = Buffer.from('53CAB0AF4141FDC3AB973F1107678B27EFAC7F4549FCCB72', 'hex');
-// var toonKey = Buffer.from('326A1EBC882487370500E84D0DDA81F46F69F67552648F9EF20252FDCD895808', 'hex');
+var toonKey =  Buffer.from('0D5B411174F7F3543FBD006ABC1F716E', 'hex'); // 128-bits
+// var toonKey = Buffer.from('53CAB0AF4141FDC3AB973F1107678B27EFAC7F4549FCCB72', 'hex'); // 192-bits
+// var toonKey = Buffer.from('326A1EBC882487370500E84D0DDA81F46F69F67552648F9EF20252FDCD895808', 'hex'); // 256-bits
 
 var LORA_IV = CryptoJS.enc.Hex.parse('00000000000000000000000000000000');
 
@@ -10,7 +10,7 @@ var mtype = [null, null, 'up', 'down', 'up', 'down', null, null];
 
 var payload64;
 
-// var raw_payload = "vDgS4YS2dyj0sKCPBATAdzBnnAkEFOTlOOsYBCZlAEA=";
+// var raw_payload = "vDgS4YS2dyj0sKCPBATAdzBnnAkEFOTlOOsYBCZlAEA="; // for debugging
 
 function getDevAddr(){
     return BufferReverse(BufferReverse(payload64).slice(3, 7));
