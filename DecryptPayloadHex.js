@@ -42,7 +42,6 @@ function toonDecrypt(payload){
 
 function convert64(payload) {
     // console.log(payload);
-    // payload64 = Buffer.from(payload.toString(), 'base64');
     payload64 = Buffer.from(payload, 'hex');
     // console.log("payload64: ", payload64);
 }

@@ -92,14 +92,8 @@ app.post("/", (req, res) => {
     uplinkData.save()
         .then(item => {
             // call toonDecryption
-            if(req.body.payload_raw=undefined){
-                var payload_raw = req.body.payload_raw;
-                console.log("payload_raw: "+payload_raw);
-            } else {
-                var payload_raw = req.body.DevEUI_uplink.payload_hex;
-                console.log("payload_hex: "+payload_raw);
-            }
-
+            var payload_raw = req.body.DevEUI_uplink.payload_hex;
+            console.log("payload_hex: "+payload_raw);
             var plaintextPayload = app.use(DecryptPayload.toonDecrypt(payload_raw));
             console.log("plaintextPayload: "+plaintextPayload);
 
