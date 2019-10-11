@@ -47,21 +47,24 @@ var uplinkSchema = new mongoose.Schema({
         longitude: Number,
         location_source: String
     },
-    downlink_url: String
+    downlink_url: String,
+    server_time: {
+        type: Date,
+        default: Date.now
+    },
+    plaintext: {
+        type: String,
+        default: 0
+    }
 });
 
 var Uplink = mongoose.model("Uplink", uplinkSchema);
 
 app.post("/", (req, res) => {
+    req.body.plaintext = DecryptPayload.toonDecrypt(req.body.payload_raw);
     var uplinkData = new Uplink(req.body);
     uplinkData.save()
         .then(item => {
-            // call toonDecryption
-            var payload_raw = req.body.payload_raw;
-            console.log("payload_raw: "+payload_raw);
-            var plaintextPayload = app.use(DecryptPayload.toonDecrypt(payload_raw));
-            console.log("plaintextPayload: "+plaintextPayload);
-
             res.send("uplink saved to database");
         })
         .catch(err => {

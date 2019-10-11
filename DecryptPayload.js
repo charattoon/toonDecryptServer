@@ -102,13 +102,11 @@ function decryptWithKeys() {
     }
     // console.log("hex: ",plaintextPayload);
 
-    console.log("text: ", plaintextPayload.toString('utf8'), " || ", plaintextPayload.length, "bytes");
+    // console.log("text: ", plaintextPayload.toString('utf8'), " || ", plaintextPayload.length, "bytes");
+    console.log(plaintextPayload.toString('utf8'));
     return plaintextPayload;
   }
 }
-
-// console.log("\ntoonDecrypt\n");
-
 // toonDecrypt(raw_payload);
 
 module.exports.toonDecrypt = toonDecrypt;
