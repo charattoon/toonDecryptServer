@@ -61,8 +61,12 @@ var uplinkSchema = new mongoose.Schema({
 var Uplink = mongoose.model("Uplink", uplinkSchema);
 
 app.post("/", (req, res) => {
-    req.body.plaintext = DecryptPayload.toonDecrypt(req.body.payload_raw);
-    var uplinkData = new Uplink(req.body);
+    let requestPayload = {
+        ...req.body
+    }
+    requestPayload.plaintext = DecryptPayload.toonDecrypt(req.body.payload_raw)
+
+    var uplinkData = new Uplink(requestPayload);
     uplinkData.save()
         .then(item => {
             res.send("uplink saved to database");

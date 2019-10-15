@@ -37,13 +37,14 @@ function BufferReverse (src) {
 
 function toonDecrypt(payload){
 	convert64(payload);
-  decryptWithKeys();
+  return decryptWithKeys();
 }
 
 function convert64(payload) {
     // console.log(payload);
     payload64 = Buffer.from(payload.toString(), 'base64');
     // console.log("payload64: ", payload64);
+    return payload64;
 }
 
 function decryptWithKeys() {
