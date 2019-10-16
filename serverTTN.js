@@ -64,7 +64,7 @@ app.post("/", (req, res) => {
     let requestPayload = {
         ...req.body
     }
-    requestPayload.plaintext = DecryptPayload.toonDecrypt(req.body.payload_raw)
+    requestPayload.plaintext = DecryptPayload.toonDecrypt(req.body.payload_raw);
 
     var uplinkData = new Uplink(requestPayload);
     uplinkData.save()

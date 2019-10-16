@@ -37,13 +37,14 @@ function BufferReverse (src) {
 
 function toonDecrypt(payload){
 	convert64(payload);
-  decryptWithKeys();
+  return decryptWithKeys();
 }
 
 function convert64(payload) {
     // console.log(payload);
     payload64 = Buffer.from(payload, 'hex');
     // console.log("payload64: ", payload64);
+    return payload64;
 }
 
 function decryptWithKeys() {
@@ -102,13 +103,11 @@ function decryptWithKeys() {
     }
     // console.log("hex: ",plaintextPayload);
 
-    console.log("text: ", plaintextPayload.toString('utf8'), " || ", plaintextPayload.length, "bytes");
+    // console.log("text: ", plaintextPayload.toString('utf8'), " || ", plaintextPayload.length, "bytes");
+    console.log(plaintextPayload.toString('utf8'));
     return plaintextPayload;
   }
 }
-
-// console.log("\ntoonDecrypt\n");
-
 // toonDecrypt(raw_payload);
 
 module.exports.toonDecrypt = toonDecrypt;
