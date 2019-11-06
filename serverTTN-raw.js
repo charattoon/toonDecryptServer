@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const DecryptPayload = require('./DecryptPayload');
+// const DecryptPayload = require('./DecryptPayload');
 
 const app = express();
 const PORT = process.env.PORT || 80
@@ -64,7 +64,10 @@ app.post("/", (req, res) => {
     let requestPayload = {
         ...req.body
     }
-    requestPayload.plaintext = DecryptPayload.toonDecrypt(req.body.payload_raw);
+    let buff = new Buffer(requestPayload.payload_raw, 'base64');
+    let text = buff.toString('ascii');
+    requestPayload.plaintext = text;
+    console.log(text);
 
     var uplinkData = new Uplink(requestPayload);
     uplinkData.save()

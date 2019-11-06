@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const hex2ascii = require('hex2ascii');
 
-const DecryptPayload = require('./DecryptPayloadHex');
+// const DecryptPayload = require('./DecryptPayloadHex');
 
 const app = express();
 const PORT = process.env.PORT || 80
@@ -99,7 +100,8 @@ app.post("/", (req, res) => {
     let requestPayload = {
         ...req.body
     }
-    requestPayload.plaintext = DecryptPayload.toonDecrypt(req.body.DevEUI_uplink.payload_hex);
+    requestPayload.plaintext = hex2ascii(requestPayload.DevEUI_uplink.payload_hex);
+    console.log(requestPayload.plaintext);
 
     var uplinkData = new Uplink(requestPayload);
     uplinkData.save()
