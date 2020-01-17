@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 80
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost:27017/lorawan", { useNewUrlParser: true }).then(
+mongoose.connect("mongodb://localhost:27017/lorawan", { useNewUrlParser: true, useUnifiedTopology: true }).then(
     () => { console.log('Database is connected' )},
     err => { console.log('Can not connect to the database'+ err )}
 );
