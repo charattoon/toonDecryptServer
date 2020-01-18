@@ -64,7 +64,7 @@ app.post("/", (req, res) => {
     let requestPayload = {
         ...req.body
     }
-    let buff = new Buffer(requestPayload.payload_raw, 'base64');
+    let buff = Buffer.from(requestPayload.payload_raw, 'base64');
     let text = buff.toString('ascii');
     requestPayload.plaintext = text;
     console.log(text);
